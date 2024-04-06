@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:VoxelEngine.Layout"
+           xmlns="urn:VoxelEngine.Layout"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="vector2DType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="vector3DType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="vector4DType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="rgbaType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="textAlignType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="baseElementType">
+        <xs:complexContent>
+            <xs:extension base="xs:anyType">
+                <xs:sequence>
+                    <xs:element name="image" type="imageType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="button" type="buttonType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="textbox" type="textBoxType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="trackbar" type="trackBarType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="container" type="containerType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="panel" type="panelType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="id" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>идентификатор элемента. Тип: строка.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="pos" type="vector2DType" default="0, 0">
+                    <xs:annotation>
+                        <xs:documentation>позиция элемента. Тип: 2D вектор.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="size" type="vector2DType" default="0, 0">
+                    <xs:annotation>
+                        <xs:documentation>размер элемента. Тип: 2D вектор.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="color" type="rgbaType" default="#00000000">
+                    <xs:annotation>
+                        <xs:documentation>цвет элемента. Тип: RGBA цвет.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="margin" type="vector4DType" default="0, 0, 0, 0">
+                    <xs:annotation>
+                        <xs:documentation>внешний отступ элемента. Тип: 4D вектор. Порядок: "left,top,right,bottom"</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="visible" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>видимость элемента. Тип: логический ("true"/"false").</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="position-func" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>поставщик позиции элемента (два числа), вызываемый при изменении размера контейнера, в котором находится элемент, либо при добавлении элемента в контейнер. Может быть вызван до вызова on_hud_open.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="containerType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="padding" type="vector4DType" default="0, 0, 0, 0">
+                    <xs:annotation>
+                        <xs:documentation>внутренний отступ элемента. Тип: 4D вектор. Порядок: "left,top,right,bottom"</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="panelType">
+        <xs:complexContent>
+            <xs:extension base="containerType">
+                <xs:attribute name="scrollable" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>возможность скроллинга. Работает только у Panel. Тип: логический.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="max-length" type="xs:decimal">
+                    <xs:annotation>
+                        <xs:documentation>максимальная длина, на которую растягивается панель до начала скроллинга (если scrollable = true). Тип: число</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="imageType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="src" type="xs:string" use="required">
+                    <xs:annotation>
+                        <xs:documentation>имя изображения в папке textures без указания расширения. Тип: строка. Например gui/error</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="buttonType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="text-align" type="textAlignType">
+                    <xs:annotation>
+                        <xs:documentation>выравнивание текста ("left", "center" или "right"). Тип: строка.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="onclick" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua функция вызываемая при нажатии на кнопку.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="textBoxType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="placeholder" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>текст подстановки (используется текстовое поле пусто)</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="consumer" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua функция-приемник введенного текста. Вызывается только при завершении ввода</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="inventoryType">
+        <xs:complexContent>
+            <xs:extension base="xs:anyType">
+                <xs:sequence>
+                    <xs:element name="slot" type="slotType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="slots-grid" type="slotsGridType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <!-- Пока нет специфических атрибутов для inventory -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="slotType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="index" type="xs:integer" use="required">
+                    <xs:annotation>
+                        <xs:documentation>индекс слота инвентаря. (Нумерация с 0)</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="item-source" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>включает поведение подобное панели контента. Тип: логический</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="sharefunc" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при использовании ЛКМ + Shift. Передается id инвентаря и индекс слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="updatefunc" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при изменении содержимого слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="onrightclick" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при использовании ПКМ. Передается id инвентаря и индекс слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="slotsGridType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="start-index" type="xs:integer" use="required">
+                    <xs:annotation>
+                        <xs:documentation>индекс первого слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="rows" type="xs:integer">
+                    <xs:annotation>
+                        <xs:documentation>число рядов (не указывается, если указано cols).</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="cols" type="xs:integer">
+                    <xs:annotation>
+                        <xs:documentation>число столбцов (не указывается, если указано rows).</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="count" type="xs:integer">
+                    <xs:annotation>
+                        <xs:documentation>общее число слотов (не указывается, если указаны rows и cols).</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="interval" type="xs:decimal">
+                    <xs:annotation>
+                        <xs:documentation>интервал между слотами. Тип: число.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="sharefunc" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при использовании ЛКМ + Shift. Передается id инвентаря и индекс слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="updatefunc" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при изменении содержимого слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="onrightclick" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua событие вызываемое при использовании ПКМ. Передается id инвентаря и индекс слота</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="trackBarType">
+        <xs:complexContent>
+            <xs:extension base="baseElementType">
+                <xs:attribute name="min" type="xs:decimal" default="0">
+                    <xs:annotation>
+                        <xs:documentation>минимальное значение. Тип: число. По-умолчанию: 0</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="max" type="xs:decimal" default="1">
+                    <xs:annotation>
+                        <xs:documentation>максимальное значение. Тип: число. По-умолчанию: 1</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="value" type="xs:decimal" default="0">
+                    <xs:annotation>
+                        <xs:documentation>изначальное значение. Тип: число. По-умолчанию: 0</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="step" type="xs:decimal" default="1">
+                    <xs:annotation>
+                        <xs:documentation>размер деления ползунка. Тип: число. По-умолчанию: 1</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="track-width" type="xs:decimal" default="1">
+                    <xs:annotation>
+                        <xs:documentation>ширина указателя (в делениях). Тип: число. По-умолчанию: 1.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="consumer" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua функция-приемник установленного значения.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="supplier" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>lua lua функция-поставщик значения.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="container" type="containerType"/>
+    <xs:element name="inventory" type="inventoryType"/>
+
+</xs:schema>

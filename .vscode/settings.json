@@ -2,23 +2,29 @@
     "json.schemas": [
         {
             "fileMatch": [
-                "src/blocks/*",
+                "src/blocks/*"
             ],
             "url": "./schemas/block.schema.json"
         },
         {
             "fileMatch": [
-                "src/package.json",
+                "src/package.json"
             ],
             "url": "./schemas/package.schema.json"
         },
         {
             "fileMatch": [
-                "src/content.json",
+                "src/content.json"
             ],
             "url": "./schemas/content.schema.json"
-        },
+        }
     ],
+    "xml.fileAssociations": [
+        {
+            "pattern": "**/*.xml",
+            "systemId": "schemas/layout.xsd"
+        }
+     ],
     "search.exclude": {
         "**/.idea": true,
         "**/.vscode": true,
