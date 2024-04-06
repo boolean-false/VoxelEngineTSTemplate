@@ -1,6 +1,6 @@
 # VoxelEngineTSTemplate
 
-Шаблон для создания контент-паков для VoxelEngine
+Шаблон для создания контент-паков для [VoxelEngine]([https://duckduckgo.com](https://github.com/MihailRis/VoxelEngine-Cpp))
 
 ## Установка
 
