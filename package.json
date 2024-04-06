@@ -1,0 +1,21 @@
+{
+  "name": "ve-dagger-templ",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clearDist": "node scripts/clearDistFolder.js",
+    "copyProject": "node scripts/copyProjectSrc.js",
+    "build": "npm run clearDist && tstl && npm run copyProject",
+    "tstl": "tstl",
+    "dev": "tstl --watch"
+  },
+  "devDependencies": {
+    "lua-types": "^2.13.1",
+    "tsc-hooks": "^1.1.2",
+    "typescript": "^5.4.2",
+    "typescript-to-lua": "^1.25.1",
+    "@leminantro/voxelengine-types": "^0.0.2"
+  }
+}

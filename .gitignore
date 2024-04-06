@@ -1,7 +1,11 @@
 node_modules
 dist
 
-types/vengine
+schemas/vengine
 
 yarn.lock
 package-lock.json
+
+.idea/*
+!.idea/VoxelEngineTSTemplate.iml
+!.idea/jsonSchemas.xml

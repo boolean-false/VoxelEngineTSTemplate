@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Конфигурация блока",
+  "description": "Схема для конфигурации блока",
+  "type": "object",
+  "properties": {
+    "texture": {
+      "type": "string",
+      "description": "Название файла текстуры (без пути)",
+      "pattern": "^[^/\\\\]+$"
+    },
+    "texture-faces": {
+      "type": "array",
+      "description": "Массив текстур сторон",
+      "items": {
+        "type": "string",
+        "pattern": "^[^/\\\\]+$"
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "model": {
+      "type": "string",
+      "description": "Модель блока",
+      "enum": ["block", "none", "X", "aabb"]
+    },
+    "draw-group": {
+      "type": "integer",
+      "description": "Группа отрисовки"
+    },
+    "rotation": {
+      "type": "string",
+      "description": "Поведение вращения",
+      "enum": ["none", "pipe", "pane"]
+    },
+    "emission": {
+      "type": "array",
+      "description": "RGB свечение",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 15
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "light-passing": {
+      "type": "boolean",
+      "description": "Светопроводимость"
+    },
+    "sky-light-passing": {
+      "type": "boolean",
+      "description": "Солнечная светопроводимость"
+    },
+    "obstacle": {
+      "type": "boolean",
+      "description": "Является ли блок препятствием"
+    },
+    "hitbox": {
+      "type": "array",
+      "description": "Смещение и размер хитбокса",
+      "items": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "grounded": {
+      "type": "boolean",
+      "description": "Должен ли блок располагаться на сплошном блоке"
+    },
+    "selectable": {
+      "type": "boolean",
+      "description": "Можно ли навестить на блок"
+    },
+    "replaceable": {
+      "type": "boolean",
+      "description": "Можно ли заменить блок, поместив на его место другой блок"
+    },
+    "breakable": {
+      "type": "boolean",
+      "description": "Можно ли сломать блок"
+    },
+    "hidden": {
+      "type": "boolean",
+      "description": "Скрыт ли блок в инвентаре"
+    },
+    "picking-item": {
+      "type": "string",
+      "description": "Элемент, который будет выбран при щелчке по блоку посередине"
+    },
+    "script-name": {
+      "type": "string",
+      "description": "Имя скрипта"
+    },
+    "ui-layout": {
+      "type": "string",
+      "description": "ID макета пользовательского интерфейса для блока"
+    },
+    "inventory-size": {
+      "type": "integer",
+      "description": "Количество ячеек для инвентаря в блоке",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/MCJack123/TypeScriptToLua/master/tsconfig-schema.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": false,
+    "outDir": "dist/",
+    "rootDir": "src/",
+    "types": [
+      "lua-types/jit",
+      "@leminantro/voxelengine-types"
+    ],
+    "allowSyntheticDefaultImports": true
+  },
+  "tstl": {
+    "luaTarget": "JIT",
+    "luaLibImport": "require-minimal",
+
+    "luaPlugins": [
+      { "name": "./scripts/transformer.js" },
+    ]
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/**/*.json"
+  ],
+}
