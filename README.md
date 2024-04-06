@@ -21,7 +21,7 @@ yarn install
 в конфигурационном файле [pack-settings.json](pack-settings.json) 
 в поле ``extPath`` можно указать конечный путь до собранного контент-пака
 
-Пример ``путь до движка/res/conten/{mod_name}`` \
+Пример ``путь до движка/res/content/{mod_name}`` \
 `{mod_name}` подставляется автоматически из [package.json](src/package.json)
 
 Структура контент-пака остается стандартной

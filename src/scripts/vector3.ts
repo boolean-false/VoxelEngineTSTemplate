@@ -11,5 +11,7 @@ export default class Vector3 implements IVector3 {
         public z: number
     ) {}
 
-    toString = (): string => `X:${this.x} Y:${this.y} Z:${this.z}`
+    toString(): string {
+        return `X:${this.x} Y:${this.y} Z:${this.z}`
+    }
 }
