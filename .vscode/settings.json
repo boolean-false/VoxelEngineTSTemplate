@@ -1,0 +1,31 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "src/blocks/*",
+            ],
+            "url": "./schemas/block.schema.json"
+        },
+        {
+            "fileMatch": [
+                "src/package.json",
+            ],
+            "url": "./schemas/package.schema.json"
+        },
+        {
+            "fileMatch": [
+                "src/content.json",
+            ],
+            "url": "./schemas/content.schema.json"
+        },
+    ],
+    "search.exclude": {
+        "**/.idea": true,
+        "**/.vscode": true,
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/schemas": true,
+        "**/scripts": true,
+        "**/dist": true
+    }
+}
