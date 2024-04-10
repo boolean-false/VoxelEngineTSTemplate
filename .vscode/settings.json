@@ -22,7 +22,7 @@
     "xml.fileAssociations": [
         {
             "pattern": "**/*.xml",
-            "systemId": "schemas/layout.xsd"
+            "systemId": "schemas_xsd/layout.xsd"
         }
      ],
     "search.exclude": {
