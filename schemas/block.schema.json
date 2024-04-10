@@ -22,7 +22,7 @@
     "model": {
       "type": "string",
       "description": "Модель блока",
-      "enum": ["block", "none", "X", "aabb"]
+      "enum": ["block", "none", "X", "aabb", "custom"]
     },
     "draw-group": {
       "type": "integer",
@@ -103,6 +103,35 @@
       "type": "integer",
       "description": "Количество ячеек для инвентаря в блоке",
       "minimum": 0
+    },
+    "model-primitives": {
+      "type": "object",
+      "description": "Примитивы модели для кастомной модели",
+      "properties": {
+        "aabbs": {
+          "type": "array",
+          "description": "Определение форм и текстур",
+          "items": {
+            "type": "array",
+            "items": [
+              {"type": "number"},
+              {"type": "number"},
+              {"type": "number"},
+              {"type": "number"},
+              {"type": "number"},
+              {"type": "number"},
+              {"type": "string"},
+              {"type": "string"},
+              {"type": "string"},
+              {"type": "string"},
+              {"type": "string"},
+              {"type": "string"}
+            ],
+            "minItems": 12,
+            "maxItems": 12
+          }
+        }
+      }
     }
   },
   "additionalProperties": false
